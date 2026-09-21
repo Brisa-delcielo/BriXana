@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BriXana Park</title>
+
+  <!-- Favicon para la pestaña del navegador -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23631d33'/><circle cx='50' cy='45' r='30' fill='none' stroke='%23f9e8ed' stroke-width='4'/><line x1='50' y1='45' x2='50' y2='15' stroke='%23f9e8ed' stroke-width='3'/><line x1='50' y1='45' x2='50' y2='75' stroke='%23f9e8ed' stroke-width='3'/><line x1='50' y1='45' x2='20' y2='45' stroke='%23f9e8ed' stroke-width='3'/><line x1='50' y1='45' x2='80' y2='45' stroke='%23f9e8ed' stroke-width='3'/><line x1='50' y1='45' x2='28' y2='23' stroke='%23f9e8ed' stroke-width='3'/><line x1='50' y1='45' x2='72' y2='67' stroke='%23f9e8ed' stroke-width='3'/><line x1='50' y1='45' x2='28' y2='67' stroke='%23f9e8ed' stroke-width='3'/><line x1='50' y1='45' x2='72' y2='23' stroke='%23f9e8ed' stroke-width='3'/><polygon points='50,85 35,95 65,95' fill='%23d4af37'/><path d='M50,40 C50,40 42,30 35,37 C28,44 45,55 50,60 C55,55 72,44 65,37 C58,30 50,40 50,40 Z' fill='%23e65c82'/></svg>">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Fonts: Playfair Display + Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..800;1,400..800&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --font-serif: 'Playfair Display', serif;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: #1a0f18;
+      color: #fce7f3;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, .font-serif-title {
+      font-family: var(--font-serif);
+    }
+
+    /* Elegant Background Gradient */
+    .bg-park-gradient {
+      background: radial-gradient(circle at 50% 15%, #2a1527 0%, #170c16 60%, #0d060d 100%);
+    }
+
+    /* Glassmorphism Cards */
+    .glass-card {
+      background: rgba(42, 23, 40, 0.65);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(244, 211, 221, 0.15);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+    }
+
+    /* 3D Flip Card Effect */
+    .flip-card {
+      background-color: transparent;
+      perspective: 1000px;
+      height: 260px;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+      cursor: pointer;
+    }
+
+    .flip-card.flipped .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border-radius: 1.25rem;
+      overflow: hidden;
+    }
+
+    .flip-card-front {
+      background: linear-gradient(135deg, #2e182c 0%, #1d0e1b 100%);
+      border: 1px dashed rgba(226, 186, 140, 0.4);
+    }
+
+    .flip-card-back {
+      background: linear-gradient(135deg, #441a3d 0%, #290e25 100%);
+      border: 1px solid rgba(244, 211, 221, 0.3);
+      transform: rotateY(180deg);
+    }
+
+    /* Ticket Perforations */
+    .circus-ticket-edge {
+      position: relative;
+    }
+    .circus-ticket-edge::before, .circus-ticket-edge::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 16px;
+      height: 16px;
+      background-color: #170c16;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+    }
+    .circus-ticket-edge::before { left: -9px; border-right: 1px solid rgba(226, 186, 140, 0.3); }
+    .circus-ticket-edge::after { right: -9px; border-left: 1px solid rgba(226, 186, 140, 0.3); }
+
+    /* Floating Heart Particles */
+    @keyframes floatHeart {
+      0% { transform: translateY(105vh) rotate(0deg) scale(0.8); opacity: 0; }
+      20% { opacity: 0.35; }
+      80% { opacity: 0.35; }
+      100% { transform: translateY(-10vh) rotate(360deg) scale(1.2); opacity: 0; }
+    }
+
+    .heart-particle {
+      position: fixed;
+      bottom: -20px;
+      pointer-events: none;
+      z-index: 1;
+      animation: floatHeart linear infinite;
+    }
+
+    /* REALISTIC BALLOON GRAPHICS AND SWAY ANIMATION */
+    @keyframes balloonSway {
+      0%, 100% { transform: translateY(0px) rotate(-3deg); }
+      50% { transform: translateY(-14px) rotate(3deg); }
+    }
+
+    .balloon-wrapper {
+      position: relative;
+      display: inline-flex;
+      flex-direction: column;
+      items-center: center;
+      animation: balloonSway 4.5s ease-in-out infinite;
+      cursor: pointer;
+    }
+
+    .balloon-body {
+      width: 75px;
+      height: 90px;
+      border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+      position: relative;
+      box-shadow: inset -10px -10px 18px rgba(0, 0, 0, 0.35), inset 8px 8px 15px rgba(255, 255, 255, 0.45), 0 10px 20px rgba(0, 0, 0, 0.4);
+      transition: transform 0.2s ease, filter 0.2s ease;
+    }
+
+    .balloon-body:hover {
+      transform: scale(1.08);
+      filter: brightness(1.15);
+    }
+
+    .balloon-shine {
+      position: absolute;
+      top: 15%;
+      left: 20%;
+      width: 14px;
+      height: 25px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.55);
+      transform: rotate(-30deg);
+    }
+
+    .balloon-knot {
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-bottom: 9px solid currentColor;
+      margin: -2px auto 0 auto;
+    }
+
+    .balloon-string {
+      width: 1.5px;
+      height: 45px;
+      background: rgba(255, 255, 255, 0.35);
+      margin: 0 auto;
+    }
+
+    /* Slow Ferris Wheel Spin */
+    @keyframes slowSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .animate-spin-slow {
+      animation: slowSpin 25s linear infinite;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #170c16; }
+    ::-webkit-scrollbar-thumb { background: #3e203b; border-radius: 4px; }
+  </style>
+</head>
+<body class="bg-park-gradient min-h-screen text-slate-200 antialiased relative selection:bg-rose-900/60 selection:text-rose-100">
+
+  
+  <!-- Floating hearts canvas container -->
+  <div id="hearts-container" class="fixed inset-0 pointer-events-none z-0"></div>
+
+  <!-- Hidden YouTube Player Container for "Labios Rotos - Zoé" -->
+  <div id="youtube-player-wrapper" class="hidden">
+    <div id="yt-player"></div>
+  </div>
+
+  <header class="sticky top-0 z-50 glass-card border-b border-rose-300/10 px-4 py-3">
+    <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-rose-950/80 border border-amber-300/30 flex items-center justify-center text-amber-200 shadow-inner">
+          <i data-lucide="ferris-wheel" class="w-5 h-5 animate-spin-slow"></i>
+        </div>
+        <div>
+          <h1 class="text-lg font-serif-title font-semibold tracking-wide text-rose-100">Amour Park</h1>
+          <p class="text-[11px] text-rose-300/70">6 Meses Juntas • Celebrando el Día 24</p>
+        </div>
+      </div>
+
+      <!-- Music Player Trigger: Labios Rotos by Zoé -->
+      <div class="flex items-center gap-3 bg-rose-950/70 px-4 py-2 rounded-full border border-rose-300/20 text-xs shadow-lg">
+        <button id="music-toggle" class="w-8 h-8 rounded-full bg-rose-800/80 hover:bg-rose-700 text-rose-100 flex items-center justify-center transition shadow" onclick="toggleZoemusic()">
+          <i id="music-icon" data-lucide="music" class="w-4 h-4"></i>
+        </button>
+        <div>
+          <p class="font-medium text-rose-100 flex items-center gap-1.5">
+            <span>Labios Rotos</span>
+            <span class="text-[10px] text-amber-300 font-mono">ZOÉ</span>
+          </p>
+          <p class="text-[10px] text-rose-300/60" id="audio-status">Presiona play para escuchar</p>
+        </div>
+      </div>
+
+      <!-- Nav Links -->
+      <nav class="hidden md:flex items-center gap-1 text-xs">
+        <a href="#rueda" class="px-3 py-1.5 rounded-full hover:bg-rose-900/30 text-rose-200/80 hover:text-rose-100 transition">Rueda del Tiempo</a>
+        <a href="#recuerdos" class="px-3 py-1.5 rounded-full hover:bg-rose-900/30 text-rose-200/80 hover:text-rose-100 transition">Recuerdos</a>
+        <a href="#globos" class="px-3 py-1.5 rounded-full hover:bg-rose-900/30 text-rose-200/80 hover:text-rose-100 transition">Globos</a>
+        <a href="#peluches" class="px-3 py-1.5 rounded-full hover:bg-rose-900/30 text-rose-200/80 hover:text-rose-100 transition">Vales</a>
+        <a href="#deseos" class="px-3 py-1.5 rounded-full hover:bg-rose-900/30 text-rose-200/80 hover:text-rose-100 transition">Deseos</a>
+      </nav>
+    </div>
+  </header>
+
+
+  <main class="relative z-10 max-w-5xl mx-auto px-4 py-10 space-y-20">
+
+    <!-- Hero Title -->
+    <section class="text-center py-8 space-y-6">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-950/70 border border-amber-300/30 text-amber-200 text-xs tracking-wider uppercase">
+        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-300"></i>
+        <span>Nuestro Parque Mágico de Diversiones</span>
+      </div>
+
+      <h2 class="text-4xl sm:text-6xl font-serif-title font-normal text-rose-100 tracking-tight leading-tight max-w-3xl mx-auto">
+        6 Meses de Magia, Risas y <span class="italic text-amber-200/90 font-serif">Aventuras</span>
+      </h2>
+
+      <p class="text-rose-200/70 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+        Cada día 24 renovamos nuestra promesa. Bienvenido a tu parque de diversiones interactivo para celebrar nuestro camino juntas.
+      </p>
+
+      <div class="pt-2 flex justify-center">
+        <a href="#rueda" class="px-6 py-3 rounded-full bg-rose-900/60 hover:bg-rose-800/80 border border-amber-300/30 text-rose-100 font-medium text-sm transition shadow-lg flex items-center gap-2">
+          <span>Comenzar el recorrido</span>
+          <i data-lucide="arrow-down" class="w-4 h-4 text-amber-200"></i>
+        </a>
+      </div>
+    </section>
+
+    <!-- Atracción: Rueda del Tiempo -->
+    <section id="rueda" class="glass-card rounded-3xl p-6 sm:p-10 relative overflow-hidden">
+      <div class="flex flex-col md:flex-row items-center gap-8">
+        <div class="md:w-1/2 space-y-4 text-center md:text-left">
+          <div class="inline-flex items-center gap-1.5 text-amber-200/80 text-xs font-medium uppercase tracking-wider">
+            <i data-lucide="clock" class="w-4 h-4"></i>
+            <span>TIK TAK TIK TAK</span>
+          </div>
+          <h3 class="text-3xl font-serif-title text-rose-100">La Rueda del Tiempo</h3>
+          <p class="text-rose-200/70 text-sm leading-relaxed">
+            Cada vuelta de la rueda conmemora el tiempo transcurrido desde nuestro primer día. Nuestro punto de encuentro siempre es el día 24.
+          </p>
+
+          <div class="grid grid-cols-4 gap-2 pt-2">
+            <div class="bg-rose-950/60 border border-rose-300/10 p-3 rounded-2xl text-center">
+              <span id="days-count" class="block text-2xl font-serif font-bold text-amber-200">0</span>
+              <span class="text-[10px] text-rose-300/60 uppercase">Días</span>
+            </div>
+            <div class="bg-rose-950/60 border border-rose-300/10 p-3 rounded-2xl text-center">
+              <span id="hours-count" class="block text-2xl font-serif font-bold text-amber-200">0</span>
+              <span class="text-[10px] text-rose-300/60 uppercase">Horas</span>
+            </div>
+            <div class="bg-rose-950/60 border border-rose-300/10 p-3 rounded-2xl text-center">
+              <span id="minutes-count" class="block text-2xl font-serif font-bold text-amber-200">0</span>
+              <span class="text-[10px] text-rose-300/60 uppercase">Minutos</span>
+            </div>
+            <div class="bg-rose-950/60 border border-rose-300/10 p-3 rounded-2xl text-center">
+              <span id="seconds-count" class="block text-2xl font-serif font-bold text-amber-200">0</span>
+              <span class="text-[10px] text-rose-300/60 uppercase">Segundos</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="md:w-1/2 flex justify-center relative">
+          <div class="w-64 h-64 sm:w-72 sm:h-72 relative flex items-center justify-center">
+            <svg class="w-full h-full text-amber-200/30 animate-spin-slow" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+              <circle cx="50" cy="50" r="42" stroke-width="1.2" stroke-dasharray="3 2" />
+              <circle cx="50" cy="50" r="30" stroke-width="1" />
+              <line x1="50" y1="8" x2="50" y2="92" stroke-width="0.8" />
+              <line x1="8" y1="50" x2="92" y2="50" stroke-width="0.8" />
+              <line x1="20" y1="20" x2="80" y2="80" stroke-width="0.8" />
+              <line x1="20" y1="80" x2="80" y2="20" stroke-width="0.8" />
+            </svg>
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
+              <span class="text-4xl font-serif text-amber-200 font-normal">6</span>
+              <span class="text-xs uppercase tracking-widest text-rose-200/80">Meses Juntas</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Atracción: La Casa de los Recuerdos -->
+    <section id="recuerdos" class="glass-card rounded-3xl p-6 sm:p-10 space-y-8">
+      <div class="text-center max-w-xl mx-auto space-y-2">
+        <div class="inline-flex items-center gap-1.5 text-amber-200/80 text-xs font-medium uppercase tracking-wider">
+          <i data-lucide="ticket" class="w-4 h-4"></i>
+          <span>Hmmmm...?</span>
+        </div>
+        <h3 class="text-3xl font-serif-title text-rose-100">La Casa de los recuerdos</h3>
+        <p class="text-rose-200/70 text-sm">
+          Pases VIP para revivir momentos inolvidables. Haz clic en cada billete para dar la vuelta y ver el secreto.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <div class="flip-card" onclick="flipTicket(this, '🎪')">
+          <div class="flip-card-inner circus-ticket-edge">
+            <div class="flip-card-front p-6 flex flex-col justify-between items-center text-center">
+              <span class="text-[10px] text-amber-200/60 font-mono tracking-widest">BOLETO VIP</span>
+              <div class="text-5xl my-auto">🎪🍿</div>
+              <h4 class="font-serif text-lg text-rose-100">El Primer Paseo</h4>
+              <p class="text-xs text-rose-300/60">Toca para voltear</p>
+            </div>
+            <div class="flip-card-back p-6 flex flex-col justify-between items-center text-center">
+              <span class="text-[10px] text-amber-200/80 font-mono">DÍA 24 DE INICIO</span>
+              <p class="text-xs text-rose-100 italic my-auto leading-relaxed">
+                "Las mariposas en el estómago como la primera vez que nos dimos un beso."
+              </p>
+              <div class="text-[11px] text-amber-200 bg-rose-950/60 px-3 py-1 rounded-full border border-amber-300/20">
+                Vale x 1 Abrazo Infinito
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card" onclick="flipTicket(this, '🎠')">
+          <div class="flip-card-inner circus-ticket-edge">
+            <div class="flip-card-front p-6 flex flex-col justify-between items-center text-center">
+              <span class="text-[10px] text-amber-200/60 font-mono tracking-widest">BOLETO VIP</span>
+              <div class="text-5xl my-auto">🎠🍦</div>
+              <h4 class="font-serif text-lg text-rose-100">Risas Incontables</h4>
+              <p class="text-xs text-rose-300/60">Toca para voltear</p>
+            </div>
+            <div class="flip-card-back p-6 flex flex-col justify-between items-center text-center">
+              <span class="text-[10px] text-amber-200/80 font-mono">CARRUSEL DE ALEGRÍA</span>
+              <p class="text-xs text-rose-100 italic my-auto leading-relaxed">
+                "Esos días en los que no podemos parar de mirarnos y ser felices por tenernos."
+              </p>
+              <div class="text-[11px] text-amber-200 bg-rose-950/60 px-3 py-1 rounded-full border border-amber-300/20">
+                Vale x 1 Mirada Seductora
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card" onclick="flipTicket(this, '🎟️')">
+          <div class="flip-card-inner circus-ticket-edge">
+            <div class="flip-card-front p-6 flex flex-col justify-between items-center text-center">
+              <span class="text-[10px] text-amber-200/60 font-mono tracking-widest">BOLETO VIP</span>
+              <div class="text-5xl my-auto">🎟️🍭</div>
+              <h4 class="font-serif text-lg text-rose-100">Dulces Momentos</h4>
+              <p class="text-xs text-rose-300/60">Toca para voltear</p>
+            </div>
+            <div class="flip-card-back p-6 flex flex-col justify-between items-center text-center">
+              <span class="text-[10px] text-amber-200/80 font-mono">SABOR Y AMOR</span>
+              <p class="text-xs text-rose-100 italic my-auto leading-relaxed">
+                "Compartir nuestros postres favoritos y hablar del futuro horas y horas."
+              </p>
+              <div class="text-[11px] text-amber-200 bg-rose-950/60 px-3 py-1 rounded-full border border-amber-300/20">
+                Vale x 1 Helado Compartido
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card" onclick="flipTicket(this, '🎩')">
+          <div class="flip-card-inner circus-ticket-edge">
+            <div class="flip-card-front p-6 flex flex-col justify-between items-center text-center">
+              <span class="text-[10px] text-amber-200/60 font-mono tracking-widest">BOLETO VIP</span>
+              <div class="text-5xl my-auto">🎩✨</div>
+              <h4 class="font-serif text-lg text-rose-100">Show de Magia</h4>
+              <p class="text-xs text-rose-300/60">Toca para voltear</p>
+            </div>
+            <div class="flip-card-back p-6 flex flex-col justify-between items-center text-center">
+              <span class="text-[10px] text-amber-200/80 font-mono">CONEXIÓN ÚNICA</span>
+              <p class="text-xs text-rose-100 italic my-auto leading-relaxed">
+                "La magia natural con la que encajamos desde el primer segundo."
+              </p>
+              <div class="text-[11px] text-amber-200 bg-rose-950/60 px-3 py-1 rounded-full border border-amber-300/20">
+                Vale x 1 Mirada Cómplice
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card" onclick="flipTicket(this, '🎡')">
+          <div class="flip-card-inner circus-ticket-edge">
+            <div class="flip-card-front p-6 flex flex-col justify-between items-center text-center">
+              <span class="text-[10px] text-amber-200/60 font-mono tracking-widest">BOLETO VIP</span>
+              <div class="text-5xl my-auto">🎡💖</div>
+              <h4 class="font-serif text-lg text-rose-100">Cima de la Rueda</h4>
+              <p class="text-xs text-rose-300/60">Toca para voltear</p>
+            </div>
+            <div class="flip-card-back p-6 flex flex-col justify-between items-center text-center">
+              <span class="text-[10px] text-amber-200/80 font-mono">PAZ Y REFUGIO</span>
+              <p class="text-xs text-rose-100 italic my-auto leading-relaxed">
+                "Ver el mundo desde lo alto tomadas de la mano, sintiendo que nada más importa."
+              </p>
+              <div class="text-[11px] text-amber-200 bg-rose-950/60 px-3 py-1 rounded-full border border-amber-300/20">
+                Vale x 1 Beso Dulce
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card" onclick="flipTicket(this, '🎆')">
+          <div class="flip-card-inner circus-ticket-edge">
+            <div class="flip-card-front p-6 flex flex-col justify-between items-center text-center">
+              <span class="text-[10px] text-amber-200/60 font-mono tracking-widest">BOLETO VIP #006</span>
+              <div class="text-5xl my-auto">🎆🏰</div>
+              <h4 class="font-serif text-lg text-rose-100">El Gran Final</h4>
+              <p class="text-xs text-rose-300/60">Toca para voltear</p>
+            </div>
+            <div class="flip-card-back p-6 flex flex-col justify-between items-center text-center">
+              <span class="text-[10px] text-amber-200/80 font-mono">FUTURO BRILLANTE</span>
+              <p class="text-xs text-rose-100 italic my-auto leading-relaxed">
+                "Por todos los cumples de mes y años que aún nos quedan por celebrar juntas."
+              </p>
+              <div class="text-[11px] text-amber-200 bg-rose-950/60 px-3 py-1 rounded-full border border-amber-300/20">
+                Vale x Siempre Juntas
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- Atracción: Tiro al Globo con Gráficos Realistas -->
+    <section id="globos" class="glass-card rounded-3xl p-6 sm:p-10 space-y-6">
+      <div class="text-center max-w-xl mx-auto space-y-2">
+        <div class="inline-flex items-center gap-1.5 text-amber-200/80 text-xs font-medium uppercase tracking-wider">
+          <i data-lucide="target" class="w-4 h-4"></i>
+          <span>BOOM!</span>
+        </div>
+        <h3 class="text-3xl font-serif-title text-rose-100">Tiro al Globo de Razones</h3>
+        <p class="text-rose-200/70 text-sm">
+          Haz clic en cualquiera de los globos flotantes para explotarlo y revelar una razón especial.
+        </p>
+      </div>
+
+      <!-- Real Graphic Balloons Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 justify-items-center" id="balloon-grid">
+        <!-- Injected via JavaScript -->
+      </div>
+
+      <!-- Message Reveal Modal -->
+      <div id="balloon-message-box" class="hidden bg-rose-950/90 border border-amber-200/30 p-5 rounded-2xl text-center space-y-2 animate-fade-in shadow-xl max-w-md mx-auto">
+        <span class="text-amber-200 text-xs uppercase tracking-widest font-mono">Razón Desbloqueada ✨</span>
+        <p id="balloon-message-text" class="text-rose-100 font-serif text-base sm:text-lg italic"></p>
+      </div>
+    </section>
+
+    <!-- Atracción: Máquina de Peluches -->
+    <section id="peluches" class="glass-card rounded-3xl p-6 sm:p-10 space-y-6">
+      <div class="text-center max-w-xl mx-auto space-y-2">
+        <div class="inline-flex items-center gap-1.5 text-amber-200/80 text-xs font-medium uppercase tracking-wider">
+          <i data-lucide="gift" class="w-4 h-4"></i>
+          <span>Agarrame</span>
+        </div>
+        <h3 class="text-3xl font-serif-title text-rose-100">Máquina de Peluches de Vales</h3>
+        <p class="text-rose-200/70 text-sm">
+          Activa la garra para atrapar una esfera con un vale romántico intercambiable.
+        </p>
+      </div>
+
+      <div class="max-w-md mx-auto bg-slate-950/80 border border-rose-300/20 rounded-3xl p-6 space-y-6 text-center shadow-2xl relative">
+        <canvas id="claw-canvas" width="360" height="200" class="w-full bg-rose-950/30 rounded-2xl border border-rose-300/10"></canvas>
+
+        <button id="claw-btn" onclick="triggerClawGame()" class="w-full py-3 rounded-full bg-gradient-to-r from-amber-700/80 to-rose-900/80 hover:from-amber-600/80 hover:to-rose-800/80 border border-amber-300/30 text-rose-100 font-medium text-sm transition shadow-lg flex items-center justify-center gap-2">
+          <i data-lucide="play-circle" class="w-4 h-4 text-amber-200"></i>
+          <span>Bajar la Garra</span>
+        </button>
+
+        <div id="voucher-result" class="hidden bg-rose-950/80 border border-amber-300/30 p-4 rounded-2xl text-rose-100 text-sm font-serif italic shadow-inner"></div>
+      </div>
+    </section>
+
+    <!-- Atracción: Pozo de los Deseos -->
+    <section id="deseos" class="glass-card rounded-3xl p-6 sm:p-10 space-y-6">
+      <div class="text-center max-w-xl mx-auto space-y-2">
+        <div class="inline-flex items-center gap-1.5 text-amber-200/80 text-xs font-medium uppercase tracking-wider">
+          <i data-lucide="sparkles" class="w-4 h-4"></i>
+          <span>Deseo...</span>
+        </div>
+        <h3 class="text-3xl font-serif-title text-rose-100">El Pozo de los Deseos</h3>
+        <p class="text-rose-200/70 text-sm">
+          Lanza una moneda virtual escribiendo un deseo para nuestro futuro. Se guardará en el pozo.
+        </p>
+      </div>
+
+      <div class="max-w-md mx-auto space-y-4">
+        <div class="flex gap-2">
+          <input type="text" id="wish-input" placeholder="Escribe un deseo aquí..." class="flex-1 bg-rose-950/60 border border-rose-300/20 rounded-full px-4 py-2.5 text-sm text-rose-100 placeholder-rose-300/40 focus:outline-none focus:border-amber-300/50 transition">
+          <button onclick="addWish()" class="px-5 py-2.5 rounded-full bg-rose-900/80 hover:bg-rose-800/90 border border-amber-300/30 text-rose-100 text-sm transition font-medium flex items-center gap-1.5">
+            <span>Pedir</span>
+            <i data-lucide="coins" class="w-4 h-4 text-amber-200"></i>
+          </button>
+        </div>
+
+        <div id="wishes-list" class="space-y-2.5 pt-2"></div>
+      </div>
+    </section>
+
+    <footer class="text-center py-8 border-t border-rose-300/10 space-y-2">
+      <p class="font-serif text-rose-200/80 text-sm">Gracias por estos 6 meses maravillosos ❤️</p>
+      <p class="text-xs text-rose-300/40">Feliz día 24 • Creado con todo mi amor</p>
+    </footer>
+
+  </main>
+
+
+  <!-- YouTube IFrame Player API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+
+  <script>
+    lucide.createIcons();
+
+    // ==========================================
+    // YOUTUBE AUDIO INTEGRATION ("Labios Rotos - Zoé")
+    // ==========================================
+    let ytPlayer;
+    let isZoePlaying = false;
+
+    function onYouTubeIframeAPIReady() {
+      ytPlayer = new YT.Player('yt-player', {
+        height: '0',
+        width: '0',
+        videoId: '7h2ryr_uUEs', // Zoé - Labios Rotos (MTV Unplugged)
+        playerVars: {
+          'autoplay': 0,
+          'controls': 0,
+          'loop': 1,
+          'playlist': '7h2ryr_uUEs'
+        },
+        events: {
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+
+    function toggleZoemusic() {
+      if (!ytPlayer || typeof ytPlayer.playVideo !== 'function') return;
+
+      const status = document.getElementById('audio-status');
+      const icon = document.getElementById('music-icon');
+
+      if (isZoePlaying) {
+        ytPlayer.pauseVideo();
+        isZoePlaying = false;
+        status.innerText = 'Pausado';
+        icon.setAttribute('data-lucide', 'music');
+      } else {
+        ytPlayer.playVideo();
+        isZoePlaying = true;
+        status.innerText = 'Sonando: Labios Rotos ♪';
+        icon.setAttribute('data-lucide', 'pause');
+      }
+      lucide.createIcons();
+    }
+
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+        ytPlayer.playVideo();
+      }
+    }
+
+    // ==========================================
+    // 1. TIME COUNTER (Calculated from Day 24)
+    // ==========================================
+    const startDate = new Date('2026-03-24T00:00:00');
+
+    function updateTimeCounter() {
+      const now = new Date();
+      const diff = Math.abs(now - startDate);
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      document.getElementById('days-count').innerText = days;
+      document.getElementById('hours-count').innerText = hours;
+      document.getElementById('minutes-count').innerText = minutes;
+      document.getElementById('seconds-count').innerText = seconds;
+    }
+    setInterval(updateTimeCounter, 1000);
+    updateTimeCounter();
+
+    // ==========================================
+    // 2. 3D FLIP TICKETS LOGIC
+    // ==========================================
+    function flipTicket(cardElement) {
+      cardElement.classList.toggle('flipped');
+      confetti({
+        particleCount: 30,
+        spread: 50,
+        origin: { y: 0.7 },
+        colors: ['#e2ba8c', '#f43f5e', '#a855f7', '#fce7f3']
+      });
+    }
+
+    // ==========================================
+    // 3. REALISTIC BALLOONS LOGIC
+    // ==========================================
+    const balloonReasons = [
+      "Tu sonrisa ilumina cualquier día gris.",
+      "La dulzura infinita con la que me escuchas.",
+      "Tus abrazos que me dan una paz inexplicable.",
+      "Lo divertido que es hacer cualquier cosa contigo.",
+      "Tu inteligencia y la pasión con la que hablas.",
+      "La complicidad única que compartimos.",
+      "Cómo haces que todo se sienta sencillo y mágico.",
+      "Por ser mi persona favorita en el mundo entero."
+    ];
+
+    const balloonColors = [
+      { bg: '#f43f5e', text: '#fda4af' }, // Rose Pink
+      { bg: '#fb7185', text: '#fecdd3' }, // Pastel Coral
+      { bg: '#e2ba8c', text: '#fef3c7' }, // Soft Gold
+      { bg: '#a855f7', text: '#e9d5ff' }, // Soft Violet
+      { bg: '#f472b6', text: '#fbcfe8' }, // Sweet Magenta
+      { bg: '#fb923c', text: '#ffedd5' }, // Peach
+      { bg: '#e11d48', text: '#ffe4e6' }, // Wine Rose
+      { bg: '#c084fc', text: '#f3e8ff' }  // Lavender
+    ];
+
+    const balloonGrid = document.getElementById('balloon-grid');
+    balloonReasons.forEach((reason, idx) => {
+      const color = balloonColors[idx % balloonColors.length];
+      const wrapper = document.createElement('div');
+      wrapper.className = 'balloon-wrapper';
+      wrapper.style.animationDelay = `${(idx * 0.4).toFixed(1)}s`;
+      wrapper.onclick = () => popGraphicBalloon(wrapper, reason);
+
+      wrapper.innerHTML = `
+        <div class="balloon-body" style="background-color: ${color.bg};">
+          <div class="balloon-shine"></div>
+        </div>
+        <div class="balloon-knot" style="color: ${color.bg};"></div>
+        <div class="balloon-string"></div>
+        <span class="text-[11px] text-rose-200/70 font-mono mt-1">#${idx + 1}</span>
+      `;
+      balloonGrid.appendChild(wrapper);
+    });
+
+    function popGraphicBalloon(element, text) {
+      element.style.transform = 'scale(0) rotate(20deg)';
+      element.style.opacity = '0';
+      element.style.transition = 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+      element.style.pointerEvents = 'none';
+
+      const msgBox = document.getElementById('balloon-message-box');
+      const msgText = document.getElementById('balloon-message-text');
+      msgBox.classList.remove('hidden');
+      msgText.innerText = `"${text}"`;
+
+      confetti({
+        particleCount: 45,
+        spread: 70,
+        origin: { y: 0.65 }
+      });
+    }
+
+    // ==========================================
+    // 4. MÁQUINA DE PELUCHES (Canvas 2D)
+    // ==========================================
+    const clawCanvas = document.getElementById('claw-canvas');
+    const ctx = clawCanvas.getContext('2d');
+    let clawY = 20;
+    let isClawMoving = false;
+
+    const clawVouchers = [
+      "🎟️ Vale por una cena romántica a tu elección.",
+      "🎟️ Vale por una noche de películas y snacks preferidos.",
+      "🎟️ Vale por un abrazo de 5 minutos sin soltarte.",
+      "🎟️ Vale por un postre especial en nuestra próxima cita.",
+      "🎟️ Vale por cumplirte un capricho o deseo que quieras."
+    ];
+
+    function drawClawMachine() {
+      ctx.clearRect(0, 0, clawCanvas.width, clawCanvas.height);
+
+      // Cable
+      ctx.beginPath();
+      ctx.moveTo(clawCanvas.width / 2, 0);
+      ctx.lineTo(clawCanvas.width / 2, clawY);
+      ctx.strokeStyle = '#e2ba8c';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      // Head
+      ctx.fillStyle = '#f43f5e';
+      ctx.beginPath();
+      ctx.arc(clawCanvas.width / 2, clawY, 14, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Prongs
+      ctx.strokeStyle = '#e2ba8c';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(clawCanvas.width / 2 - 10, clawY + 5);
+      ctx.lineTo(clawCanvas.width / 2 - 20, clawY + 25);
+      ctx.moveTo(clawCanvas.width / 2 + 10, clawY + 5);
+      ctx.lineTo(clawCanvas.width / 2 + 20, clawY + 25);
+      ctx.stroke();
+
+      // Spheres
+      const colors = ['#f43f5e', '#e2ba8c', '#a855f7', '#fb7185'];
+      for (let i = 0; i < 5; i++) {
+        ctx.fillStyle = colors[i % colors.length];
+        ctx.beginPath();
+        ctx.arc(60 + i * 60, 175, 18, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = 'rgba(255,255,255,0.4)';
+        ctx.beginPath();
+        ctx.arc(55 + i * 60, 170, 5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+    drawClawMachine();
+
+    function triggerClawGame() {
+      if (isClawMoving) return;
+      isClawMoving = true;
+
+      const btn = document.getElementById('claw-btn');
+      const result = document.getElementById('voucher-result');
+      btn.disabled = true;
+      btn.classList.add('opacity-50');
+
+      let descent = setInterval(() => {
+        if (clawY < 140) {
+          clawY += 4;
+          drawClawMachine();
+        } else {
+          clearInterval(descent);
+          let ascent = setInterval(() => {
+            if (clawY > 20) {
+              clawY -= 4;
+              drawClawMachine();
+            } else {
+              clearInterval(ascent);
+              isClawMoving = false;
+              btn.disabled = false;
+              btn.classList.remove('opacity-50');
+
+              const randomVoucher = clawVouchers[Math.floor(Math.random() * clawVouchers.length)];
+              result.innerText = randomVoucher;
+              result.classList.remove('hidden');
+
+              confetti({ particleCount: 40, spread: 70 });
+            }
+          }, 20);
+        }
+      }, 20);
+    }
+
+    // ==========================================
+    // 5. POZO DE LOS DESEOS LOGIC
+    // ==========================================
+    function renderWishes() {
+      const wishes = JSON.parse(localStorage.getItem('amour_park_wishes') || '[]');
+      const container = document.getElementById('wishes-list');
+      container.innerHTML = '';
+
+      if (wishes.length === 0) {
+        container.innerHTML = `<p class="text-xs text-rose-300/50 text-center italic">Aún no hay deseos en el pozo. ¡Pide el primero!</p>`;
+        return;
+      }
+
+      wishes.forEach(wish => {
+        const item = document.createElement('div');
+        item.className = 'bg-rose-950/50 border border-rose-300/15 p-3 rounded-2xl text-xs text-rose-100 flex items-center gap-2.5 shadow-sm';
+        item.innerHTML = `<i data-lucide="sparkles" class="w-4 h-4 text-amber-300 shrink-0"></i><span>${wish}</span>`;
+        container.appendChild(item);
+      });
+      lucide.createIcons();
+    }
+
+    function addWish() {
+      const input = document.getElementById('wish-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const wishes = JSON.parse(localStorage.getItem('amour_park_wishes') || '[]');
+      wishes.push(text);
+      localStorage.setItem('amour_park_wishes', JSON.stringify(wishes));
+      input.value = '';
+      renderWishes();
+
+      confetti({ particleCount: 25, spread: 45 });
+    }
+    renderWishes();
+
+    // ==========================================
+    // 6. BACKGROUND FLOATING HEARTS
+    // ==========================================
+    function createFloatingHearts() {
+      const container = document.getElementById('hearts-container');
+      for (let i = 0; i < 14; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart-particle text-rose-300/30';
+        heart.innerHTML = '♥';
+        heart.style.left = `${Math.random() * 100}%`;
+        heart.style.animationDuration = `${7 + Math.random() * 9}s`;
+        heart.style.animationDelay = `${Math.random() * 6}s`;
+        heart.style.fontSize = `${12 + Math.random() * 16}px`;
+        container.appendChild(heart);
+      }
+    }
+    createFloatingHearts();
+  </script>
+</body>
+</html>
