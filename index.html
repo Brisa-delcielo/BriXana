@@ -6,7 +6,7 @@
   <title>BriXana Park</title>
 
   <!-- Favicon para la pestaña del navegador -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23631d33'/><circle cx='50' cy='45' r='30' fill='none' stroke='%23f9e8ed' stroke-width='4'/><line x1='50' y1='45' x2='50' y2='15' stroke='%23f9e8ed' stroke-width='3'/><line x1='50' y1='45' x2='50' y2='75' stroke='%23f9e8ed' stroke-width='3'/><line x1='50' y1='45' x2='20' y2='45' stroke='%23f9e8ed' stroke-width='3'/><line x1='50' y1='45' x2='80' y2='45' stroke='%23f9e8ed' stroke-width='3'/><line x1='50' y1='45' x2='28' y2='23' stroke='%23f9e8ed' stroke-width='3'/><line x1='50' y1='45' x2='72' y2='67' stroke='%23f9e8ed' stroke-width='3'/><line x1='50' y1='45' x2='28' y2='67' stroke='%23f9e8ed' stroke-width='3'/><line x1='50' y1='45' x2='72' y2='23' stroke='%23f9e8ed' stroke-width='3'/><polygon points='50,85 35,95 65,95' fill='%23d4af37'/><path d='M50,40 C50,40 42,30 35,37 C28,44 45,55 50,60 C55,55 72,44 65,37 C58,30 50,40 50,40 Z' fill='%23e65c82'/></svg>">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23631d33'/><circle cx='50' cy='45' r='30' fill='none' stroke='%23f9e8ed' stroke-width='4'/><line x1='50' y1='45' x2='50' y2='15' stroke='%23f9e8ed' stroke-width='3'/><line x1='50' y1='45' x2='50' y2='75' stroke='%23f9e8ed' stroke-width='3'/><line x1='50' y1='45' x2='20' y2='45' stroke='%23f9e8ed' stroke-width='3'/><line x1='50' y1='45' x2='80' y2='45' stroke='%23f9e8ed' stroke-width='3'/><line x1='50' y1='45' x2='28' y2='23' stroke='%23f9e8ed' stroke-width='3'/><line x1='50' y1='45' x2='72' y2='67' stroke='%23f9e8ed' stroke-width='3'/><line x1='50' y1='45' x2='28' y2='67' stroke='%23f9e8ed' stroke-width='3'/><line x1='50' y1='45' x2='72' y2='23' stroke='%23f9e8ed' stroke-width='3'/><polygon points='50,85 35,95 65,95' fill='%23d4af37'/><path d='M50,40 C50,40 42,30 35,37 C28,44 45,55 50,60 C55,55 72,44 65,37 C58,30 50,40 50,40 Z' fill='%23e65c82'/></svg>">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -39,12 +39,10 @@
       font-family: var(--font-serif);
     }
 
-    /* Elegant Background Gradient */
     .bg-park-gradient {
       background: radial-gradient(circle at 50% 15%, #2a1527 0%, #170c16 60%, #0d060d 100%);
     }
 
-    /* Glassmorphism Cards */
     .glass-card {
       background: rgba(42, 23, 40, 0.65);
       backdrop-filter: blur(14px);
@@ -53,7 +51,7 @@
       box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
     }
 
-    /* 3D Flip Card Effect */
+    /* 3D Flip Card */
     .flip-card {
       background-color: transparent;
       perspective: 1000px;
@@ -95,7 +93,6 @@
       transform: rotateY(180deg);
     }
 
-    /* Ticket Perforations */
     .circus-ticket-edge {
       position: relative;
     }
@@ -113,23 +110,7 @@
     .circus-ticket-edge::before { left: -9px; border-right: 1px solid rgba(226, 186, 140, 0.3); }
     .circus-ticket-edge::after { right: -9px; border-left: 1px solid rgba(226, 186, 140, 0.3); }
 
-    /* Floating Heart Particles */
-    @keyframes floatHeart {
-      0% { transform: translateY(105vh) rotate(0deg) scale(0.8); opacity: 0; }
-      20% { opacity: 0.35; }
-      80% { opacity: 0.35; }
-      100% { transform: translateY(-10vh) rotate(360deg) scale(1.2); opacity: 0; }
-    }
-
-    .heart-particle {
-      position: fixed;
-      bottom: -20px;
-      pointer-events: none;
-      z-index: 1;
-      animation: floatHeart linear infinite;
-    }
-
-    /* REALISTIC BALLOON GRAPHICS AND SWAY ANIMATION */
+    /* Globos */
     @keyframes balloonSway {
       0%, 100% { transform: translateY(0px) rotate(-3deg); }
       50% { transform: translateY(-14px) rotate(3deg); }
@@ -139,7 +120,7 @@
       position: relative;
       display: inline-flex;
       flex-direction: column;
-      items-center: center;
+      align-items: center;
       animation: balloonSway 4.5s ease-in-out infinite;
       cursor: pointer;
     }
@@ -185,7 +166,6 @@
       margin: 0 auto;
     }
 
-    /* Slow Ferris Wheel Spin */
     @keyframes slowSpin {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
@@ -194,7 +174,6 @@
       animation: slowSpin 25s linear infinite;
     }
 
-    /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: #170c16; }
     ::-webkit-scrollbar-thumb { background: #3e203b; border-radius: 4px; }
@@ -202,11 +181,6 @@
 </head>
 <body class="bg-park-gradient min-h-screen text-slate-200 antialiased relative selection:bg-rose-900/60 selection:text-rose-100">
 
-  
-  <!-- Floating hearts canvas container -->
-  <div id="hearts-container" class="fixed inset-0 pointer-events-none z-0"></div>
-
-  <!-- Hidden YouTube Player Container for "Labios Rotos - Zoé" -->
   <div id="youtube-player-wrapper" class="hidden">
     <div id="yt-player"></div>
   </div>
@@ -218,12 +192,11 @@
           <i data-lucide="ferris-wheel" class="w-5 h-5 animate-spin-slow"></i>
         </div>
         <div>
-          <h1 class="text-lg font-serif-title font-semibold tracking-wide text-rose-100">Amour Park</h1>
+          <h1 class="text-lg font-serif-title font-semibold tracking-wide text-rose-100">BriXana Park</h1>
           <p class="text-[11px] text-rose-300/70">6 Meses Juntas • Celebrando el Día 24</p>
         </div>
       </div>
 
-      <!-- Music Player Trigger: Labios Rotos by Zoé -->
       <div class="flex items-center gap-3 bg-rose-950/70 px-4 py-2 rounded-full border border-rose-300/20 text-xs shadow-lg">
         <button id="music-toggle" class="w-8 h-8 rounded-full bg-rose-800/80 hover:bg-rose-700 text-rose-100 flex items-center justify-center transition shadow" onclick="toggleZoemusic()">
           <i id="music-icon" data-lucide="music" class="w-4 h-4"></i>
@@ -237,7 +210,6 @@
         </div>
       </div>
 
-      <!-- Nav Links -->
       <nav class="hidden md:flex items-center gap-1 text-xs">
         <a href="#rueda" class="px-3 py-1.5 rounded-full hover:bg-rose-900/30 text-rose-200/80 hover:text-rose-100 transition">Rueda del Tiempo</a>
         <a href="#recuerdos" class="px-3 py-1.5 rounded-full hover:bg-rose-900/30 text-rose-200/80 hover:text-rose-100 transition">Recuerdos</a>
@@ -248,10 +220,8 @@
     </div>
   </header>
 
-
   <main class="relative z-10 max-w-5xl mx-auto px-4 py-10 space-y-20">
 
-    <!-- Hero Title -->
     <section class="text-center py-8 space-y-6">
       <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-950/70 border border-amber-300/30 text-amber-200 text-xs tracking-wider uppercase">
         <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-300"></i>
@@ -274,7 +244,7 @@
       </div>
     </section>
 
-    <!-- Atracción: Rueda del Tiempo -->
+    <!-- Rueda del Tiempo -->
     <section id="rueda" class="glass-card rounded-3xl p-6 sm:p-10 relative overflow-hidden">
       <div class="flex flex-col md:flex-row items-center gap-8">
         <div class="md:w-1/2 space-y-4 text-center md:text-left">
@@ -326,12 +296,12 @@
       </div>
     </section>
 
-    <!-- Atracción: La Casa de los Recuerdos -->
+    <!-- La Casa de los Recuerdos -->
     <section id="recuerdos" class="glass-card rounded-3xl p-6 sm:p-10 space-y-8">
       <div class="text-center max-w-xl mx-auto space-y-2">
         <div class="inline-flex items-center gap-1.5 text-amber-200/80 text-xs font-medium uppercase tracking-wider">
           <i data-lucide="ticket" class="w-4 h-4"></i>
-          <span>Hmmmm...?</span>
+          <span>Momentos Únicos</span>
         </div>
         <h3 class="text-3xl font-serif-title text-rose-100">La Casa de los recuerdos</h3>
         <p class="text-rose-200/70 text-sm">
@@ -340,8 +310,7 @@
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-        <div class="flip-card" onclick="flipTicket(this, '🎪')">
+        <div class="flip-card" onclick="flipTicket(this)">
           <div class="flip-card-inner circus-ticket-edge">
             <div class="flip-card-front p-6 flex flex-col justify-between items-center text-center">
               <span class="text-[10px] text-amber-200/60 font-mono tracking-widest">BOLETO VIP</span>
@@ -361,12 +330,12 @@
           </div>
         </div>
 
-        <div class="flip-card" onclick="flipTicket(this, '🎠')">
+        <div class="flip-card" onclick="flipTicket(this)">
           <div class="flip-card-inner circus-ticket-edge">
             <div class="flip-card-front p-6 flex flex-col justify-between items-center text-center">
               <span class="text-[10px] text-amber-200/60 font-mono tracking-widest">BOLETO VIP</span>
               <div class="text-5xl my-auto">🎠🍦</div>
-              <h4 class="font-serif text-lg text-rose-100">Risas Incontables</h4>
+              <h4 class="font-serif text-lg text-rose-100">Razones Incontables</h4>
               <p class="text-xs text-rose-300/60">Toca para voltear</p>
             </div>
             <div class="flip-card-back p-6 flex flex-col justify-between items-center text-center">
@@ -381,7 +350,7 @@
           </div>
         </div>
 
-        <div class="flip-card" onclick="flipTicket(this, '🎟️')">
+        <div class="flip-card" onclick="flipTicket(this)">
           <div class="flip-card-inner circus-ticket-edge">
             <div class="flip-card-front p-6 flex flex-col justify-between items-center text-center">
               <span class="text-[10px] text-amber-200/60 font-mono tracking-widest">BOLETO VIP</span>
@@ -400,72 +369,10 @@
             </div>
           </div>
         </div>
-
-        <div class="flip-card" onclick="flipTicket(this, '🎩')">
-          <div class="flip-card-inner circus-ticket-edge">
-            <div class="flip-card-front p-6 flex flex-col justify-between items-center text-center">
-              <span class="text-[10px] text-amber-200/60 font-mono tracking-widest">BOLETO VIP</span>
-              <div class="text-5xl my-auto">🎩✨</div>
-              <h4 class="font-serif text-lg text-rose-100">Show de Magia</h4>
-              <p class="text-xs text-rose-300/60">Toca para voltear</p>
-            </div>
-            <div class="flip-card-back p-6 flex flex-col justify-between items-center text-center">
-              <span class="text-[10px] text-amber-200/80 font-mono">CONEXIÓN ÚNICA</span>
-              <p class="text-xs text-rose-100 italic my-auto leading-relaxed">
-                "La magia natural con la que encajamos desde el primer segundo."
-              </p>
-              <div class="text-[11px] text-amber-200 bg-rose-950/60 px-3 py-1 rounded-full border border-amber-300/20">
-                Vale x 1 Mirada Cómplice
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="flip-card" onclick="flipTicket(this, '🎡')">
-          <div class="flip-card-inner circus-ticket-edge">
-            <div class="flip-card-front p-6 flex flex-col justify-between items-center text-center">
-              <span class="text-[10px] text-amber-200/60 font-mono tracking-widest">BOLETO VIP</span>
-              <div class="text-5xl my-auto">🎡💖</div>
-              <h4 class="font-serif text-lg text-rose-100">Cima de la Rueda</h4>
-              <p class="text-xs text-rose-300/60">Toca para voltear</p>
-            </div>
-            <div class="flip-card-back p-6 flex flex-col justify-between items-center text-center">
-              <span class="text-[10px] text-amber-200/80 font-mono">PAZ Y REFUGIO</span>
-              <p class="text-xs text-rose-100 italic my-auto leading-relaxed">
-                "Ver el mundo desde lo alto tomadas de la mano, sintiendo que nada más importa."
-              </p>
-              <div class="text-[11px] text-amber-200 bg-rose-950/60 px-3 py-1 rounded-full border border-amber-300/20">
-                Vale x 1 Beso Dulce
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="flip-card" onclick="flipTicket(this, '🎆')">
-          <div class="flip-card-inner circus-ticket-edge">
-            <div class="flip-card-front p-6 flex flex-col justify-between items-center text-center">
-              <span class="text-[10px] text-amber-200/60 font-mono tracking-widest">BOLETO VIP #006</span>
-              <div class="text-5xl my-auto">🎆🏰</div>
-              <h4 class="font-serif text-lg text-rose-100">El Gran Final</h4>
-              <p class="text-xs text-rose-300/60">Toca para voltear</p>
-            </div>
-            <div class="flip-card-back p-6 flex flex-col justify-between items-center text-center">
-              <span class="text-[10px] text-amber-200/80 font-mono">FUTURO BRILLANTE</span>
-              <p class="text-xs text-rose-100 italic my-auto leading-relaxed">
-                "Por todos los cumples de mes y años que aún nos quedan por celebrar juntas."
-              </p>
-              <div class="text-[11px] text-amber-200 bg-rose-950/60 px-3 py-1 rounded-full border border-amber-300/20">
-                Vale x Siempre Juntas
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
     </section>
 
-
-    <!-- Atracción: Tiro al Globo con Gráficos Realistas -->
+    <!-- Tiro al Globo -->
     <section id="globos" class="glass-card rounded-3xl p-6 sm:p-10 space-y-6">
       <div class="text-center max-w-xl mx-auto space-y-2">
         <div class="inline-flex items-center gap-1.5 text-amber-200/80 text-xs font-medium uppercase tracking-wider">
@@ -478,44 +385,43 @@
         </p>
       </div>
 
-      <!-- Real Graphic Balloons Grid -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 justify-items-center" id="balloon-grid">
-        <!-- Injected via JavaScript -->
-      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 justify-items-center" id="balloon-grid"></div>
 
-      <!-- Message Reveal Modal -->
       <div id="balloon-message-box" class="hidden bg-rose-950/90 border border-amber-200/30 p-5 rounded-2xl text-center space-y-2 animate-fade-in shadow-xl max-w-md mx-auto">
         <span class="text-amber-200 text-xs uppercase tracking-widest font-mono">Razón Desbloqueada ✨</span>
         <p id="balloon-message-text" class="text-rose-100 font-serif text-base sm:text-lg italic"></p>
       </div>
     </section>
 
-    <!-- Atracción: Máquina de Peluches -->
+    <!-- Máquina de Peluches MODIFICADA -->
     <section id="peluches" class="glass-card rounded-3xl p-6 sm:p-10 space-y-6">
       <div class="text-center max-w-xl mx-auto space-y-2">
         <div class="inline-flex items-center gap-1.5 text-amber-200/80 text-xs font-medium uppercase tracking-wider">
           <i data-lucide="gift" class="w-4 h-4"></i>
-          <span>Agarrame</span>
+          <span>Atrapa un Premio</span>
         </div>
         <h3 class="text-3xl font-serif-title text-rose-100">Máquina de Peluches de Vales</h3>
         <p class="text-rose-200/70 text-sm">
-          Activa la garra para atrapar una esfera con un vale romántico intercambiable.
+          Baja la garra para atrapar un peluche (osito, conejo, gatito o panda) con un vale romántico especial.
         </p>
       </div>
 
-      <div class="max-w-md mx-auto bg-slate-950/80 border border-rose-300/20 rounded-3xl p-6 space-y-6 text-center shadow-2xl relative">
-        <canvas id="claw-canvas" width="360" height="200" class="w-full bg-rose-950/30 rounded-2xl border border-rose-300/10"></canvas>
+      <div class="max-w-md mx-auto bg-slate-950/80 border border-rose-300/20 rounded-3xl p-6 space-y-4 text-center shadow-2xl relative">
+        <canvas id="claw-canvas" width="350" height="260" class="w-full bg-rose-950/30 rounded-2xl border border-rose-300/10"></canvas>
 
-        <button id="claw-btn" onclick="triggerClawGame()" class="w-full py-3 rounded-full bg-gradient-to-r from-amber-700/80 to-rose-900/80 hover:from-amber-600/80 hover:to-rose-800/80 border border-amber-300/30 text-rose-100 font-medium text-sm transition shadow-lg flex items-center justify-center gap-2">
+        <button id="claw-btn" onclick="bajarGarra()" class="w-full py-3 rounded-full bg-gradient-to-r from-amber-700/80 to-rose-900/80 hover:from-amber-600/80 hover:to-rose-800/80 border border-amber-300/30 text-rose-100 font-medium text-sm transition shadow-lg flex items-center justify-center gap-2">
           <i data-lucide="play-circle" class="w-4 h-4 text-amber-200"></i>
           <span>Bajar la Garra</span>
         </button>
 
-        <div id="voucher-result" class="hidden bg-rose-950/80 border border-amber-300/30 p-4 rounded-2xl text-rose-100 text-sm font-serif italic shadow-inner"></div>
+        <div style="margin-top: 15px;" class="text-left">
+          <h4 class="text-xs uppercase tracking-wider text-amber-200 font-mono mb-2">🎒 Tus Vales Desbloqueados:</h4>
+          <div id="valesColeccion" class="space-y-2"></div>
+        </div>
       </div>
     </section>
 
-    <!-- Atracción: Pozo de los Deseos -->
+    <!-- Pozo de los Deseos -->
     <section id="deseos" class="glass-card rounded-3xl p-6 sm:p-10 space-y-6">
       <div class="text-center max-w-xl mx-auto space-y-2">
         <div class="inline-flex items-center gap-1.5 text-amber-200/80 text-xs font-medium uppercase tracking-wider">
@@ -524,7 +430,7 @@
         </div>
         <h3 class="text-3xl font-serif-title text-rose-100">El Pozo de los Deseos</h3>
         <p class="text-rose-200/70 text-sm">
-          Lanza una moneda virtual escribiendo un deseo para nuestro futuro. Se guardará en el pozo.
+          Lanza una moneda virtual escribiendo un deseo para nuestro futuro.
         </p>
       </div>
 
@@ -548,16 +454,12 @@
 
   </main>
 
-
-  <!-- YouTube IFrame Player API -->
   <script src="https://www.youtube.com/iframe_api"></script>
 
   <script>
     lucide.createIcons();
 
-    // ==========================================
-    // YOUTUBE AUDIO INTEGRATION ("Labios Rotos - Zoé")
-    // ==========================================
+    // Reproductor YouTube
     let ytPlayer;
     let isZoePlaying = false;
 
@@ -565,22 +467,14 @@
       ytPlayer = new YT.Player('yt-player', {
         height: '0',
         width: '0',
-        videoId: '7h2ryr_uUEs', // Zoé - Labios Rotos (MTV Unplugged)
-        playerVars: {
-          'autoplay': 0,
-          'controls': 0,
-          'loop': 1,
-          'playlist': '7h2ryr_uUEs'
-        },
-        events: {
-          'onStateChange': onPlayerStateChange
-        }
+        videoId: '7h2ryr_uUEs',
+        playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': '7h2ryr_uUEs' },
+        events: { 'onStateChange': onPlayerStateChange }
       });
     }
 
     function toggleZoemusic() {
       if (!ytPlayer || typeof ytPlayer.playVideo !== 'function') return;
-
       const status = document.getElementById('audio-status');
       const icon = document.getElementById('music-icon');
 
@@ -599,49 +493,29 @@
     }
 
     function onPlayerStateChange(event) {
-      if (event.data === YT.PlayerState.ENDED) {
-        ytPlayer.playVideo();
-      }
+      if (event.data === YT.PlayerState.ENDED) { ytPlayer.playVideo(); }
     }
 
-    // ==========================================
-    // 1. TIME COUNTER (Calculated from Day 24)
-    // ==========================================
+    // Contador
     const startDate = new Date('2026-03-24T00:00:00');
-
     function updateTimeCounter() {
       const now = new Date();
       const diff = Math.abs(now - startDate);
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
-
-      document.getElementById('days-count').innerText = days;
-      document.getElementById('hours-count').innerText = hours;
-      document.getElementById('minutes-count').innerText = minutes;
-      document.getElementById('seconds-count').innerText = seconds;
+      document.getElementById('days-count').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+      document.getElementById('hours-count').innerText = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      document.getElementById('minutes-count').innerText = Math.floor((diff / (1000 * 60)) % 60);
+      document.getElementById('seconds-count').innerText = Math.floor((diff / 1000) % 60);
     }
     setInterval(updateTimeCounter, 1000);
     updateTimeCounter();
 
-    // ==========================================
-    // 2. 3D FLIP TICKETS LOGIC
-    // ==========================================
+    // Flip tickets
     function flipTicket(cardElement) {
       cardElement.classList.toggle('flipped');
-      confetti({
-        particleCount: 30,
-        spread: 50,
-        origin: { y: 0.7 },
-        colors: ['#e2ba8c', '#f43f5e', '#a855f7', '#fce7f3']
-      });
+      confetti({ particleCount: 30, spread: 50, origin: { y: 0.7 }, colors: ['#e2ba8c', '#f43f5e', '#a855f7'] });
     }
 
-    // ==========================================
-    // 3. REALISTIC BALLOONS LOGIC
-    // ==========================================
+    // Globos
     const balloonReasons = [
       "Tu sonrisa ilumina cualquier día gris.",
       "La dulzura infinita con la que me escuchas.",
@@ -652,31 +526,20 @@
       "Cómo haces que todo se sienta sencillo y mágico.",
       "Por ser mi persona favorita en el mundo entero."
     ];
-
-    const balloonColors = [
-      { bg: '#f43f5e', text: '#fda4af' }, // Rose Pink
-      { bg: '#fb7185', text: '#fecdd3' }, // Pastel Coral
-      { bg: '#e2ba8c', text: '#fef3c7' }, // Soft Gold
-      { bg: '#a855f7', text: '#e9d5ff' }, // Soft Violet
-      { bg: '#f472b6', text: '#fbcfe8' }, // Sweet Magenta
-      { bg: '#fb923c', text: '#ffedd5' }, // Peach
-      { bg: '#e11d48', text: '#ffe4e6' }, // Wine Rose
-      { bg: '#c084fc', text: '#f3e8ff' }  // Lavender
-    ];
-
+    const balloonColors = ['#f43f5e', '#fb7185', '#e2ba8c', '#a855f7', '#f472b6', '#fb923c', '#e11d48', '#c084fc'];
     const balloonGrid = document.getElementById('balloon-grid');
+
     balloonReasons.forEach((reason, idx) => {
       const color = balloonColors[idx % balloonColors.length];
       const wrapper = document.createElement('div');
       wrapper.className = 'balloon-wrapper';
       wrapper.style.animationDelay = `${(idx * 0.4).toFixed(1)}s`;
       wrapper.onclick = () => popGraphicBalloon(wrapper, reason);
-
       wrapper.innerHTML = `
-        <div class="balloon-body" style="background-color: ${color.bg};">
+        <div class="balloon-body" style="background-color: ${color};">
           <div class="balloon-shine"></div>
         </div>
-        <div class="balloon-knot" style="color: ${color.bg};"></div>
+        <div class="balloon-knot" style="color: ${color};"></div>
         <div class="balloon-string"></div>
         <span class="text-[11px] text-rose-200/70 font-mono mt-1">#${idx + 1}</span>
       `;
@@ -684,171 +547,154 @@
     });
 
     function popGraphicBalloon(element, text) {
-      element.style.transform = 'scale(0) rotate(20deg)';
+      element.style.transform = 'scale(0)';
       element.style.opacity = '0';
-      element.style.transition = 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
       element.style.pointerEvents = 'none';
-
-      const msgBox = document.getElementById('balloon-message-box');
-      const msgText = document.getElementById('balloon-message-text');
-      msgBox.classList.remove('hidden');
-      msgText.innerText = `"${text}"`;
-
-      confetti({
-        particleCount: 45,
-        spread: 70,
-        origin: { y: 0.65 }
-      });
+      document.getElementById('balloon-message-box').classList.remove('hidden');
+      document.getElementById('balloon-message-text').innerText = `"${text}"`;
+      confetti({ particleCount: 45, spread: 70, origin: { y: 0.65 } });
     }
 
     // ==========================================
-    // 4. MÁQUINA DE PELUCHES (Canvas 2D)
+    // 🧸 MÁQUINA DE PELUCHES (NUEVA LÓGICA CON DIBUJOS)
     // ==========================================
-    const clawCanvas = document.getElementById('claw-canvas');
-    const ctx = clawCanvas.getContext('2d');
-    let clawY = 20;
-    let isClawMoving = false;
+    const canvas = document.getElementById('claw-canvas');
+    const ctx = canvas.getContext('2d');
 
-    const clawVouchers = [
-      "🎟️ Vale por una cena romántica a tu elección.",
-      "🎟️ Vale por una noche de películas y snacks preferidos.",
-      "🎟️ Vale por un abrazo de 5 minutos sin soltarte.",
-      "🎟️ Vale por un postre especial en nuestra próxima cita.",
-      "🎟️ Vale por cumplirte un capricho o deseo que quieras."
+    let garra = { x: 175, y: 30, bajando: false, subiendo: false, atrapado: null, velocidad: 3 };
+
+    const listaPeluches = [
+      { id: 1, tipo: 'osito', color: '#E0A96D', orejas: '#C88A4B', x: 50,  y: 220, radio: 18, premio: '🎫 Vale por un Helado Juntas' },
+      { id: 2, tipo: 'conejo', color: '#F3D1DC', orejas: '#E2A9BE', x: 110, y: 215, radio: 17, premio: '🎫 Vale por un Abrazo de 5 minutos' },
+      { id: 3, tipo: 'gatito', color: '#D6C7FF', orejas: '#B8A2FF', x: 170, y: 220, radio: 18, premio: '🎫 Vale por elegir la Película hoy' },
+      { id: 4, tipo: 'pandita', color: '#FFFFFF', orejas: '#333333', x: 230, y: 215, radio: 18, premio: '🎫 Vale por un Mensaje de Amor Largo' },
+      { id: 5, tipo: 'osito', color: '#C88A4B', orejas: '#96612E', x: 290, y: 220, radio: 17, premio: '🎫 Vale por una Cena Especial' }
     ];
 
-    function drawClawMachine() {
-      ctx.clearRect(0, 0, clawCanvas.width, clawCanvas.height);
+    let peluches = [...listaPeluches];
+    let coleccionVales = JSON.parse(localStorage.getItem('mis_vales_6meses')) || [];
 
-      // Cable
-      ctx.beginPath();
-      ctx.moveTo(clawCanvas.width / 2, 0);
-      ctx.lineTo(clawCanvas.width / 2, clawY);
-      ctx.strokeStyle = '#e2ba8c';
-      ctx.lineWidth = 3;
-      ctx.stroke();
+    function dibujarPeluches() {
+      peluches.forEach(p => {
+        ctx.save();
+        ctx.translate(p.x, p.y);
 
-      // Head
-      ctx.fillStyle = '#f43f5e';
-      ctx.beginPath();
-      ctx.arc(clawCanvas.width / 2, clawY, 14, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Prongs
-      ctx.strokeStyle = '#e2ba8c';
-      ctx.lineWidth = 4;
-      ctx.beginPath();
-      ctx.moveTo(clawCanvas.width / 2 - 10, clawY + 5);
-      ctx.lineTo(clawCanvas.width / 2 - 20, clawY + 25);
-      ctx.moveTo(clawCanvas.width / 2 + 10, clawY + 5);
-      ctx.lineTo(clawCanvas.width / 2 + 20, clawY + 25);
-      ctx.stroke();
-
-      // Spheres
-      const colors = ['#f43f5e', '#e2ba8c', '#a855f7', '#fb7185'];
-      for (let i = 0; i < 5; i++) {
-        ctx.fillStyle = colors[i % colors.length];
-        ctx.beginPath();
-        ctx.arc(60 + i * 60, 175, 18, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = 'rgba(255,255,255,0.4)';
-        ctx.beginPath();
-        ctx.arc(55 + i * 60, 170, 5, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-    drawClawMachine();
-
-    function triggerClawGame() {
-      if (isClawMoving) return;
-      isClawMoving = true;
-
-      const btn = document.getElementById('claw-btn');
-      const result = document.getElementById('voucher-result');
-      btn.disabled = true;
-      btn.classList.add('opacity-50');
-
-      let descent = setInterval(() => {
-        if (clawY < 140) {
-          clawY += 4;
-          drawClawMachine();
+        if (p.tipo === 'conejo') {
+          ctx.fillStyle = p.orejas;
+          ctx.beginPath(); ctx.ellipse(-6, -20, 4, 12, -0.1, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath(); ctx.ellipse(6, -20, 4, 12, 0.1, 0, Math.PI * 2); ctx.fill();
         } else {
-          clearInterval(descent);
-          let ascent = setInterval(() => {
-            if (clawY > 20) {
-              clawY -= 4;
-              drawClawMachine();
-            } else {
-              clearInterval(ascent);
-              isClawMoving = false;
-              btn.disabled = false;
-              btn.classList.remove('opacity-50');
-
-              const randomVoucher = clawVouchers[Math.floor(Math.random() * clawVouchers.length)];
-              result.innerText = randomVoucher;
-              result.classList.remove('hidden');
-
-              confetti({ particleCount: 40, spread: 70 });
-            }
-          }, 20);
+          ctx.fillStyle = p.orejas;
+          ctx.beginPath(); ctx.arc(-12, -12, 6, 0, Math.PI * 2); ctx.fill();
+          ctx.beginPath(); ctx.arc(12, -12, 6, 0, Math.PI * 2); ctx.fill();
         }
-      }, 20);
+
+        ctx.fillStyle = p.color;
+        ctx.beginPath(); ctx.arc(0, 0, p.radio, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = '#631d33'; ctx.lineWidth = 1.5; ctx.stroke();
+
+        ctx.fillStyle = '#222';
+        ctx.beginPath(); ctx.arc(-5, -3, 2, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(5, -3, 2, 0, Math.PI * 2); ctx.fill();
+
+        ctx.fillStyle = p.tipo === 'pandita' ? '#333' : '#FFB7C5';
+        ctx.beginPath(); ctx.arc(0, 2, 3, 0, Math.PI * 2); ctx.fill();
+
+        ctx.restore();
+      });
     }
 
-    // ==========================================
-    // 5. POZO DE LOS DESEOS LOGIC
-    // ==========================================
-    function renderWishes() {
-      const wishes = JSON.parse(localStorage.getItem('amour_park_wishes') || '[]');
-      const container = document.getElementById('wishes-list');
-      container.innerHTML = '';
+    function dibujarGarra() {
+      ctx.strokeStyle = '#e2ba8c'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(garra.x, 0); ctx.lineTo(garra.x, garra.y); ctx.stroke();
 
-      if (wishes.length === 0) {
-        container.innerHTML = `<p class="text-xs text-rose-300/50 text-center italic">Aún no hay deseos en el pozo. ¡Pide el primero!</p>`;
-        return;
+      ctx.fillStyle = '#d4af37'; ctx.fillRect(garra.x - 15, garra.y, 30, 10);
+
+      ctx.strokeStyle = '#d4af37'; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(garra.x - 10, garra.y + 10); ctx.lineTo(garra.x - (garra.atrapado ? 6 : 18), garra.y + 25); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(garra.x + 10, garra.y + 10); ctx.lineTo(garra.x + (garra.atrapado ? 6 : 18), garra.y + 25); ctx.stroke();
+    }
+
+    function animarMaquina() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (garra.bajando) {
+        garra.y += garra.velocidad;
+        peluches.forEach(p => {
+          if (!garra.atrapado && Math.hypot(garra.x - p.x, (garra.y + 20) - p.y) < p.radio + 8) {
+            garra.atrapado = p;
+            garra.bajando = false;
+            garra.subiendo = true;
+          }
+        });
+        if (garra.y >= 190) { garra.bajando = false; garra.subiendo = true; }
+      } else if (garra.subiendo) {
+        garra.y -= garra.velocidad;
+        if (garra.atrapado) {
+          garra.atrapado.y = garra.y + 25;
+          garra.atrapado.x = garra.x;
+        }
+        if (garra.y <= 30) {
+          garra.subiendo = false;
+          if (garra.atrapado) {
+            otorgarPremio(garra.atrapado);
+            peluches = peluches.filter(p => p.id !== garra.atrapado.id);
+            garra.atrapado = null;
+          }
+        }
       }
 
-      wishes.forEach(wish => {
-        const item = document.createElement('div');
-        item.className = 'bg-rose-950/50 border border-rose-300/15 p-3 rounded-2xl text-xs text-rose-100 flex items-center gap-2.5 shadow-sm';
-        item.innerHTML = `<i data-lucide="sparkles" class="w-4 h-4 text-amber-300 shrink-0"></i><span>${wish}</span>`;
-        container.appendChild(item);
-      });
-      lucide.createIcons();
+      dibujarPeluches();
+      dibujarGarra();
+      requestAnimationFrame(animarMaquina);
     }
 
+    function bajarGarra() {
+      if (!garra.bajando && !garra.subiendo) {
+        garra.x = Math.floor(Math.random() * (280 - 60 + 1)) + 60;
+        garra.bajando = true;
+      }
+    }
+
+    function otorgarPremio(peluche) {
+      confetti({ particleCount: 60, spread: 60, origin: { y: 0.7 } });
+      if (!coleccionVales.includes(peluche.premio)) {
+        coleccionVales.push(peluche.premio);
+        localStorage.setItem('mis_vales_6meses', JSON.stringify(coleccionVales));
+        actualizarVistaColeccion();
+      }
+    }
+
+    function actualizarVistaColeccion() {
+      const contenedor = document.getElementById('valesColeccion');
+      if (!contenedor) return;
+      if (coleccionVales.length === 0) {
+        contenedor.innerHTML = `<p class="text-xs italic text-rose-300/50">Aún no has atrapado ningún vale. ¡Haz clic en 'Bajar la Garra'!</p>`;
+      } else {
+        contenedor.innerHTML = coleccionVales.map(v => `
+          <div class="bg-rose-950/80 border border-amber-300/30 p-2.5 rounded-xl text-rose-100 text-xs font-serif italic">
+            ${v}
+          </div>
+        `).join('');
+      }
+    }
+
+    actualizarVistaColeccion();
+    animarMaquina();
+
+    // Pozo de los deseos
     function addWish() {
       const input = document.getElementById('wish-input');
-      const text = input.value.trim();
-      if (!text) return;
-
-      const wishes = JSON.parse(localStorage.getItem('amour_park_wishes') || '[]');
-      wishes.push(text);
-      localStorage.setItem('amour_park_wishes', JSON.stringify(wishes));
+      if (!input.value.trim()) return;
+      const list = document.getElementById('wishes-list');
+      const item = document.createElement('div');
+      item.className = 'bg-rose-950/60 border border-amber-300/20 p-3 rounded-2xl text-xs text-rose-100 flex items-center gap-2';
+      item.innerHTML = `<i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-300"></i><span>${input.value}</span>`;
+      list.prepend(item);
       input.value = '';
-      renderWishes();
-
-      confetti({ particleCount: 25, spread: 45 });
+      lucide.createIcons();
+      confetti({ particleCount: 25, spread: 40, origin: { y: 0.8 } });
     }
-    renderWishes();
-
-    // ==========================================
-    // 6. BACKGROUND FLOATING HEARTS
-    // ==========================================
-    function createFloatingHearts() {
-      const container = document.getElementById('hearts-container');
-      for (let i = 0; i < 14; i++) {
-        const heart = document.createElement('div');
-        heart.className = 'heart-particle text-rose-300/30';
-        heart.innerHTML = '♥';
-        heart.style.left = `${Math.random() * 100}%`;
-        heart.style.animationDuration = `${7 + Math.random() * 9}s`;
-        heart.style.animationDelay = `${Math.random() * 6}s`;
-        heart.style.fontSize = `${12 + Math.random() * 16}px`;
-        container.appendChild(heart);
-      }
-    }
-    createFloatingHearts();
   </script>
 </body>
 </html>
