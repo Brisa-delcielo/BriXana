@@ -556,131 +556,153 @@
     }
 
     // ==========================================
-    // 🧸 MÁQUINA DE PELUCHES (NUEVA LÓGICA CON DIBUJOS)
-    // ==========================================
-    const canvas = document.getElementById('claw-canvas');
-    const ctx = canvas.getContext('2d');
+// 🧸 MÁQUINA DE PELUCHES CON MEMORIA DE JUEGO
+// ==========================================
+const canvas = document.getElementById('claw-canvas');
+const ctx = canvas.getContext('2d');
 
-    let garra = { x: 175, y: 30, bajando: false, subiendo: false, atrapado: null, velocidad: 3 };
+let garra = { x: 175, y: 30, bajando: false, subiendo: false, atrapado: null, velocidad: 3 };
 
-    const listaPeluches = [
-      { id: 1, tipo: 'osito', color: '#E0A96D', orejas: '#C88A4B', x: 50,  y: 220, radio: 18, premio: '🎫 Vale por un Helado Juntas' },
-      { id: 2, tipo: 'conejo', color: '#F3D1DC', orejas: '#E2A9BE', x: 110, y: 215, radio: 17, premio: '🎫 Vale por un Abrazo de 5 minutos' },
-      { id: 3, tipo: 'gatito', color: '#D6C7FF', orejas: '#B8A2FF', x: 170, y: 220, radio: 18, premio: '🎫 Vale por elegir la Película hoy' },
-      { id: 4, tipo: 'pandita', color: '#FFFFFF', orejas: '#333333', x: 230, y: 215, radio: 18, premio: '🎫 Vale por un Mensaje de Amor Largo' },
-      { id: 5, tipo: 'osito', color: '#C88A4B', orejas: '#96612E', x: 290, y: 220, radio: 17, premio: '🎫 Vale por una Cena Especial' }
-    ];
+const listaPeluches = [
+  { id: 1, tipo: 'osito', color: '#E0A96D', orejas: '#C88A4B', x: 50,  y: 220, radio: 18, premio: '🎫 Vale por un Helado Juntas' },
+  { id: 2, tipo: 'conejo', color: '#F3D1DC', orejas: '#E2A9BE', x: 110, y: 215, radio: 17, premio: '🎫 Vale por un Abrazo de 5 minutos' },
+  { id: 3, tipo: 'gatito', color: '#D6C7FF', orejas: '#B8A2FF', x: 170, y: 220, radio: 18, premio: '🎫 Vale por elegir la Película hoy' },
+  { id: 4, tipo: 'pandita', color: '#FFFFFF', orejas: '#333333', x: 230, y: 215, radio: 18, premio: '🎫 Vale por un Mensaje de Amor Largo' },
+  { id: 5, tipo: 'osito', color: '#C88A4B', orejas: '#96612E', x: 290, y: 220, radio: 17, premio: '🎫 Vale por una Cena Especial' }
+];
 
-    let peluches = [...listaPeluches];
-    let coleccionVales = JSON.parse(localStorage.getItem('mis_vales_6meses')) || [];
+// Cargar vales obtenidos previamente
+let coleccionVales = JSON.parse(localStorage.getItem('mis_vales_6meses')) || [];
 
-    function dibujarPeluches() {
-      peluches.forEach(p => {
-        ctx.save();
-        ctx.translate(p.x, p.y);
+// Filtrar en la máquina solo los peluches cuyos vales NO hayan sido atrapados aún
+let peluches = listaPeluches.filter(p => !coleccionVales.includes(p.premio));
 
-        if (p.tipo === 'conejo') {
-          ctx.fillStyle = p.orejas;
-          ctx.beginPath(); ctx.ellipse(-6, -20, 4, 12, -0.1, 0, Math.PI * 2); ctx.fill();
-          ctx.beginPath(); ctx.ellipse(6, -20, 4, 12, 0.1, 0, Math.PI * 2); ctx.fill();
-        } else {
-          ctx.fillStyle = p.orejas;
-          ctx.beginPath(); ctx.arc(-12, -12, 6, 0, Math.PI * 2); ctx.fill();
-          ctx.beginPath(); ctx.arc(12, -12, 6, 0, Math.PI * 2); ctx.fill();
-        }
+function dibujarPeluches() {
+  peluches.forEach(p => {
+    ctx.save();
+    ctx.translate(p.x, p.y);
 
-        ctx.fillStyle = p.color;
-        ctx.beginPath(); ctx.arc(0, 0, p.radio, 0, Math.PI * 2); ctx.fill();
-        ctx.strokeStyle = '#631d33'; ctx.lineWidth = 1.5; ctx.stroke();
-
-        ctx.fillStyle = '#222';
-        ctx.beginPath(); ctx.arc(-5, -3, 2, 0, Math.PI * 2); ctx.fill();
-        ctx.beginPath(); ctx.arc(5, -3, 2, 0, Math.PI * 2); ctx.fill();
-
-        ctx.fillStyle = p.tipo === 'pandita' ? '#333' : '#FFB7C5';
-        ctx.beginPath(); ctx.arc(0, 2, 3, 0, Math.PI * 2); ctx.fill();
-
-        ctx.restore();
-      });
+    if (p.tipo === 'conejo') {
+      ctx.fillStyle = p.orejas;
+      ctx.beginPath(); ctx.ellipse(-6, -20, 4, 12, -0.1, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(6, -20, 4, 12, 0.1, 0, Math.PI * 2); ctx.fill();
+    } else {
+      ctx.fillStyle = p.orejas;
+      ctx.beginPath(); ctx.arc(-12, -12, 6, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(12, -12, 6, 0, Math.PI * 2); ctx.fill();
     }
 
-    function dibujarGarra() {
-      ctx.strokeStyle = '#e2ba8c'; ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(garra.x, 0); ctx.lineTo(garra.x, garra.y); ctx.stroke();
+    ctx.fillStyle = p.color;
+    ctx.beginPath(); ctx.arc(0, 0, p.radio, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = '#631d33'; ctx.lineWidth = 1.5; ctx.stroke();
 
-      ctx.fillStyle = '#d4af37'; ctx.fillRect(garra.x - 15, garra.y, 30, 10);
+    ctx.fillStyle = '#222';
+    ctx.beginPath(); ctx.arc(-5, -3, 2, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(5, -3, 2, 0, Math.PI * 2); ctx.fill();
 
-      ctx.strokeStyle = '#d4af37'; ctx.lineWidth = 3;
-      ctx.beginPath(); ctx.moveTo(garra.x - 10, garra.y + 10); ctx.lineTo(garra.x - (garra.atrapado ? 6 : 18), garra.y + 25); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(garra.x + 10, garra.y + 10); ctx.lineTo(garra.x + (garra.atrapado ? 6 : 18), garra.y + 25); ctx.stroke();
-    }
+    ctx.fillStyle = p.tipo === 'pandita' ? '#333' : '#FFB7C5';
+    ctx.beginPath(); ctx.arc(0, 2, 3, 0, Math.PI * 2); ctx.fill();
 
-    function animarMaquina() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.restore();
+  });
+}
 
-      if (garra.bajando) {
-        garra.y += garra.velocidad;
-        peluches.forEach(p => {
-          if (!garra.atrapado && Math.hypot(garra.x - p.x, (garra.y + 20) - p.y) < p.radio + 8) {
-            garra.atrapado = p;
-            garra.bajando = false;
-            garra.subiendo = true;
-          }
-        });
-        if (garra.y >= 190) { garra.bajando = false; garra.subiendo = true; }
-      } else if (garra.subiendo) {
-        garra.y -= garra.velocidad;
-        if (garra.atrapado) {
-          garra.atrapado.y = garra.y + 25;
-          garra.atrapado.x = garra.x;
-        }
-        if (garra.y <= 30) {
-          garra.subiendo = false;
-          if (garra.atrapado) {
-            otorgarPremio(garra.atrapado);
-            peluches = peluches.filter(p => p.id !== garra.atrapado.id);
-            garra.atrapado = null;
-          }
-        }
+function dibujarGarra() {
+  ctx.strokeStyle = '#e2ba8c'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(garra.x, 0); ctx.lineTo(garra.x, garra.y); ctx.stroke();
+
+  ctx.fillStyle = '#d4af37'; ctx.fillRect(garra.x - 15, garra.y, 30, 10);
+
+  ctx.strokeStyle = '#d4af37'; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(garra.x - 10, garra.y + 10); ctx.lineTo(garra.x - (garra.atrapado ? 6 : 18), garra.y + 25); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(garra.x + 10, garra.y + 10); ctx.lineTo(garra.x + (garra.atrapado ? 6 : 18), garra.y + 25); ctx.stroke();
+}
+
+function animarMaquina() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  if (garra.bajando) {
+    garra.y += garra.velocidad;
+    peluches.forEach(p => {
+      if (!garra.atrapado && Math.hypot(garra.x - p.x, (garra.y + 20) - p.y) < p.radio + 8) {
+        garra.atrapado = p;
+        garra.bajando = false;
+        garra.subiendo = true;
       }
-
-      dibujarPeluches();
-      dibujarGarra();
-      requestAnimationFrame(animarMaquina);
+    });
+    if (garra.y >= 190) { garra.bajando = false; garra.subiendo = true; }
+  } else if (garra.subiendo) {
+    garra.y -= garra.velocidad;
+    if (garra.atrapado) {
+      garra.atrapado.y = garra.y + 25;
+      garra.atrapado.x = garra.x;
     }
-
-    function bajarGarra() {
-      if (!garra.bajando && !garra.subiendo) {
-        garra.x = Math.floor(Math.random() * (280 - 60 + 1)) + 60;
-        garra.bajando = true;
+    if (garra.y <= 30) {
+      garra.subiendo = false;
+      if (garra.atrapado) {
+        otorgarPremio(garra.atrapado);
+        peluches = peluches.filter(p => p.id !== garra.atrapado.id);
+        garra.atrapado = null;
       }
     }
+  }
 
-    function otorgarPremio(peluche) {
-      confetti({ particleCount: 60, spread: 60, origin: { y: 0.7 } });
-      if (!coleccionVales.includes(peluche.premio)) {
-        coleccionVales.push(peluche.premio);
-        localStorage.setItem('mis_vales_6meses', JSON.stringify(coleccionVales));
-        actualizarVistaColeccion();
-      }
-    }
+  dibujarPeluches();
+  dibujarGarra();
+  requestAnimationFrame(animarMaquina);
+}
 
-    function actualizarVistaColeccion() {
-      const contenedor = document.getElementById('valesColeccion');
-      if (!contenedor) return;
-      if (coleccionVales.length === 0) {
-        contenedor.innerHTML = `<p class="text-xs italic text-rose-300/50">Aún no has atrapado ningún vale. ¡Haz clic en 'Bajar la Garra'!</p>`;
-      } else {
-        contenedor.innerHTML = coleccionVales.map(v => `
-          <div class="bg-rose-950/80 border border-amber-300/30 p-2.5 rounded-xl text-rose-100 text-xs font-serif italic">
-            ${v}
-          </div>
-        `).join('');
-      }
-    }
+function bajarGarra() {
+  if (peluches.length === 0) {
+    alert("¡Felicidades! Ya atrapaste todos los peluches y vales de la máquina ❤️");
+    return;
+  }
+  if (!garra.bajando && !garra.subiendo) {
+    // Apuntar a uno de los peluches disponibles
+    const pelucheObjetivo = peluches[Math.floor(Math.random() * peluches.length)];
+    garra.x = pelucheObjetivo.x;
+    garra.bajando = true;
+  }
+}
 
+function otorgarPremio(peluche) {
+  confetti({ particleCount: 60, spread: 60, origin: { y: 0.7 } });
+  if (!coleccionVales.includes(peluche.premio)) {
+    coleccionVales.push(peluche.premio);
+    localStorage.setItem('mis_vales_6meses', JSON.stringify(coleccionVales));
     actualizarVistaColeccion();
-    animarMaquina();
+  }
+}
+
+function actualizarVistaColeccion() {
+  const contenedor = document.getElementById('valesColeccion');
+  if (!contenedor) return;
+  if (coleccionVales.length === 0) {
+    contenedor.innerHTML = `<p class="text-xs italic text-rose-300/50">Aún no has atrapado ningún vale. ¡Haz clic en 'Bajar la Garra'!</p>`;
+  } else {
+    contenedor.innerHTML = coleccionVales.map(v => `
+      <div class="bg-rose-950/80 border border-amber-300/30 p-2.5 rounded-xl text-rose-100 text-xs font-serif italic flex justify-between items-center">
+        <span>${v}</span>
+      </div>
+    `).join('') + `
+      <button onclick="reiniciarJuego()" class="mt-3 text-[10px] text-amber-200/70 hover:text-amber-200 underline block mx-auto">
+        🔄 Reiniciar máquina de peluches
+      </button>
+    `;
+  }
+}
+
+function reiniciarJuego() {
+  if (confirm("¿Quieres reiniciar la máquina de peluches para volver a jugar?")) {
+    localStorage.removeItem('mis_vales_6meses');
+    coleccionVales = [];
+    peluches = [...listaPeluches];
+    actualizarVistaColeccion();
+  }
+}
+
+actualizarVistaColeccion();
+animarMaquina();
 
     // Pozo de los deseos
     function addWish() {
